@@ -6,7 +6,7 @@ module.exports = (grunt) => {
     banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
     src: {
       js: ['src/**/*.js'],
-      html: ['src/index.html'],
+      html: ['src/**/*.html'],
       less: ['src/stylesheets/stylesheets.less']
     },
     clean: ['<%= distPath %>/*'],
@@ -70,6 +70,13 @@ module.exports = (grunt) => {
         esversion: 6,
       }
     },
+    copy : {
+      main : {
+        files: [
+          { expand: true, flatten: true, src: ['src/__header.html'], dest: 'dist/' },
+        ]
+      }
+    },
     recess: {
       build: {
         files: {
@@ -90,8 +97,9 @@ module.exports = (grunt) => {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-recess');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Tasks
   grunt.registerTask('default', ['jshint', 'concat']);
-  grunt.registerTask('build', ['clean', 'concat', 'recess:build']);
+  grunt.registerTask('build', ['clean', 'concat', 'copy', 'recess:build']);
 };

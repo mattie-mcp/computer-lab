@@ -1,15 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
+<head>
+  <title>Computer Lab</title>
   <script src="/static/jquery.min.js"></script>
   <script src="/static/angular.min.js"></script>
+  <script src="/static/angular-route.min.js"></script>
   <link rel="stylesheet" href="/static/bootstrap.min.css"></link>
   <script src="/static/bootstrap.min.js"></script>
   <script type="text/javascript" src="/dist/<%= grunt.config.get('pkg.name') %>.js"></script>
-<head>
 </head>
-<body ng-controller="appController"> 
-  <div class="well">This is a well</div>
-  <div class="panel panel-heading">Panel Heading</div>
-  <table class="table"></table>
+<body ng-controller="appController" style="padding-top:20px;padding-bottom:20px"> 
+  <div class="container">
+    <header ng-include src="'/dist/__header.html'"></header>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form class="row" name="signInData">
+          <div class="col-xs-3">
+            <label  for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstNameInput" placeholder="First Name" ng-model="user.firstname">
+          </div>
+          <div class="col-xs-3">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastNameInput" placeholder="Last Name" ng-model="user.lastName">
+          </div>
+          <div class="col-xs-2">
+            <label for="computerNumber">Computer Number</label>
+            <select class="form-control" ng-model="user.computer">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+          <div class="col-xs-2 text-center" style="vertical-align:middle">
+            <button type="submit" class="btn btn-primary btn-lg" ng-click="signIn(user)">Sign into Computer</button>
+          </div>
+          <div class="col-xs-2 text-center" style="vertical-align:middle">
+            <button type="button" class="btn btn-default btn-lg" ng-click="clear()">Clear</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-striped">
+          <thead>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Status</td>
+          </thead>
+          <tr ng-repeat="computer in labData">
+            <td>{{computer.id}}</td>
+            <td>{{computer.occupancy}}</td>
+            <td>{{computer.status}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

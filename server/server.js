@@ -2,8 +2,9 @@ const express = require('express');
 const app = express();
 const config = require('./config.js');
 const dbOperations = require('./src/dbOperations.js');
+const morgan = require('morgan');
 
-// TODO: Add environment
+app.use(morgan('combined'));
 // TODO: Look into nodemon
 
 // load routes
@@ -11,8 +12,8 @@ require('./routes/static.js').addRoutes(app, config);
 require('./routes/appDefault.js').addRoutes(app, config);
 require('./routes/dbOperations.js').addRoutes(app, config);
 
-// load database
-dbOperations.loadDatabase();
+// load datastore
+dbOperations.loadDatastore();
 
 app.listen(3000, () => {
   //var open = require('open');

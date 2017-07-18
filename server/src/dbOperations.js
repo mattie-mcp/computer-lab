@@ -37,7 +37,8 @@ var defaultDatabase = () => {
   for (var i=0; i<config.app.computerCount; i++) {
     var document = {
       _id: i,
-      name: 'Computer ' + i
+      name: 'Computer ' + i,
+      status: 'available'
     };
     dbOperations.insert(document);
   }
@@ -49,7 +50,7 @@ var defaultDatabase = () => {
 dbOperations.loadDatastore = () => {
   var Datastore = require('nedb');
   db.computers = new Datastore({ filename: config.db.computers });
-  console.log('loaded datastore from ' + config.db.computers);
+  console.log('loaded datastore at ' + config.db.computers);
   db.computers.loadDatabase((err) => {
     if (err) { 
       console.log(err); 

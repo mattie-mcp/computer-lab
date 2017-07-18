@@ -4,13 +4,16 @@ const config = require('./config.js');
 const dbOperations = require('./src/dbOperations.js');
 const morgan = require('morgan');
 
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 // TODO: Look into nodemon
 
 // load routes
 require('./routes/static.js').addRoutes(app, config);
 require('./routes/appDefault.js').addRoutes(app, config);
 require('./routes/dbOperations.js').addRoutes(app, config);
+
+console.log('available routes');
+console.log(app._router.stack);
 
 // load datastore
 dbOperations.loadDatastore();

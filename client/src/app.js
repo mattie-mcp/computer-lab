@@ -13,12 +13,17 @@ angular.module('app', ['ngRoute'])
       });;
 }]);
 
-angular.module('app').controller('appController', ['$scope', ($scope) => {
+angular.module('app').controller('appController', ['$scope', '$http', ($scope, $http) => {
     console.log('loaded controller');
     $scope.user;
     
-    $scope.labData = [{id: 1, occupancy: 'John Smith', status: 'occupied'},
-                      {id: 2, occupancy: 'Jane Doe', status: 'occupied'}];
+    $scope.labData = [];
+
+    $http.get('/computers', {})
+      .then((response) => {
+        console.log(response);
+      });
+
     $scope.signIn = (data) => {
       console.log(data);
     };

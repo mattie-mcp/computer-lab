@@ -3,6 +3,12 @@ const dbOperations = {};
 
 var db = {};
 
+dbOperations.updateAndRetreive = (params) => {
+  return new Promise((fullfil, reject) => {
+
+  });
+};
+
 dbOperations.find = (search) => {
   return new Promise((fulfill, reject) => {
     db.computers.find(search, function (err, docs) {
@@ -34,11 +40,11 @@ dbOperations.insert = (document) => {
  * Populates database with default computers 
  * */
 var defaultDatabase = () => {
-  for (var i=0; i<config.app.computerCount; i++) {
+  for (var i=1; i<=config.app.computerCount; i++) {
     var document = {
       _id: i,
       name: 'Computer ' + i,
-      status: 'available'
+      status: 'Available'
     };
     dbOperations.insert(document);
   }

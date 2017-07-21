@@ -32,6 +32,19 @@ app.controller('appController', ['$scope', '$http', ($scope, $http) => {
           return null;
         });
     };
+
+    $scope.updateComputerAndRefresh = (payload) => {
+        return $http({
+          url: '/computers',
+          method: "POST",
+          params: { payload: payload }
+        }).then((successResponse) => {
+          return successResponse;
+        }, (failResonse) => {
+          console.log('ERROR' + successResponse.status);
+          return null;
+        });
+    };
     
     $scope.findComputers({})
       .then((success, reject) => {
@@ -41,6 +54,10 @@ app.controller('appController', ['$scope', '$http', ($scope, $http) => {
 
     $scope.signIn = (data) => {
       //console.log(data);
+      $scope.updateComputer(data)
+        .then((success, reject) => {
+
+        });
     };
 
     $scope.clear = () => {
@@ -51,19 +68,3 @@ app.controller('appController', ['$scope', '$http', ($scope, $http) => {
 app.controller('menuController', ['$scope', ($scope) => {
     console.log('loaded menu controller');
 }]);
-
-angular.module('services.computers', [])
-  .service('computerService', ($http) => {
-    console.log('loaded computer data service');
-    return $http({
-      url: '/computers',
-      method: "GET",
-      params: { filter: {} }
-    }).then((successResponse) => {
-      console.log('service call succeeded');
-      return successResponse;
-    }, (failResonse) => {
-      console.log('ERROR' + successResponse.status);
-      return null;
-    });
-});

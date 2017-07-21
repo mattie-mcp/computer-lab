@@ -9,11 +9,8 @@ app.use(morgan('dev'));
 
 // load routes
 require('./routes/static.js').addRoutes(app, config);
+require('./routes/computers.js').addRoutes(app, config);
 require('./routes/appDefault.js').addRoutes(app, config);
-require('./routes/dbOperations.js').addRoutes(app, config);
-
-console.log('available routes');
-console.log(app._router.stack);
 
 // load datastore
 dbOperations.loadDatastore();

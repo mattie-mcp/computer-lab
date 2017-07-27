@@ -13,11 +13,23 @@ app.config(['$routeProvider', '$locationProvider', ($routeProvider, $locationPro
 }]);
 
 app.controller('appController', ['$scope', '$http', ($scope, $http) => {
-    $scope.user = {};
+    $scope.student = {};
     $scope.signingIn = false;
 
     $scope.updateSignIn = (state) => {
       $scope.signingIn = state;
+
+        // return $http({
+        //   url: '/computers',
+        //   method: "GET",
+        //   params: { filter: filter }
+        // }).then((successResponse) => {
+        //   return successResponse;
+        // }, (failResonse) => {
+        //   console.log('ERROR' + successResponse.status);
+        //   return null;
+        // });
+
     };
 
     $scope.findComputers = (filter) => {
@@ -32,19 +44,6 @@ app.controller('appController', ['$scope', '$http', ($scope, $http) => {
           return null;
         });
     };
-
-    $scope.updateComputerAndRefresh = (payload) => {
-        return $http({
-          url: '/computers',
-          method: "POST",
-          params: { payload: payload }
-        }).then((successResponse) => {
-          return successResponse;
-        }, (failResonse) => {
-          console.log('ERROR' + successResponse.status);
-          return null;
-        });
-    };
     
     $scope.findComputers({})
       .then((success, reject) => {
@@ -52,16 +51,31 @@ app.controller('appController', ['$scope', '$http', ($scope, $http) => {
         $scope.labData = success.data;
       });
 
-    $scope.signIn = (data) => {
-      //console.log(data);
-      $scope.updateComputer(data)
-        .then((success, reject) => {
-
+    $scope.signIn = (computerId, student) => {
+      $http({
+          url: '/computers',
+          method: "POST",
+          params: { id: computerId, student: student }
+        }).then((successResponse) => {
+          var updatedRecord = successResponse.data[0];
+          console.log(JSON.stringify(updatedRecord));
+          $scope.labData.find((computer) => { 
+            if (computer._id == updatedRecord._id) {
+              computer.student = updatedRecord.student;
+              computer.time = updatedRecord.time;
+              return true;
+            }
+          });
+          $scope.clear();
+          return;
+        }, (failResonse) => {
+          console.log('ERROR' + successResponse.status);
+          return null;
         });
     };
 
     $scope.clear = () => {
-      $scope.user = {};
+      $scope.student = {};
     };
 }]);
 

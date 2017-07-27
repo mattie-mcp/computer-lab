@@ -3,12 +3,9 @@ const dbOperations = {};
 
 var db = {};
 
-dbOperations.updateAndRetreive = (params) => {
-  return new Promise((fullfil, reject) => {
-
-  });
-};
-
+/**
+ * Retreives data from database depending on search criteria
+ */
 dbOperations.find = (search) => {
   return new Promise((fulfill, reject) => {
     db.computers.find(search, function (err, docs) {
@@ -20,6 +17,19 @@ dbOperations.find = (search) => {
     });
   });
 };
+
+dbOperations.update = (updateCriteria, document) => {
+  return new Promise((fulfill, reject) => {
+    db.computers.update(updateCriteria, document, { multi: true }, (err, numReplaced) => {
+      if (err) {
+        console.log(err);
+        return reject(err);
+      }
+      return fulfill(numReplaced);
+    });
+  });
+};
+
 
 /**
  * Inserts record into database
@@ -44,7 +54,9 @@ var defaultDatabase = () => {
     var document = {
       _id: i,
       name: 'Computer ' + i,
-      status: 'Available'
+      status: 'Available',
+      student: 'Student',
+      time: 0
     };
     dbOperations.insert(document);
   }
@@ -74,5 +86,25 @@ dbOperations.loadDatastore = () => {
   });
 };
 
+/**
+ * Updates data in db and returns new value
+ */
+dbOperations.updateAndRetreive = (docToUpdate, updatedDoc) => {
+  return new Promise((fulfill, reject) => {
+    console.log('doc to update' + JSON.stringify(docToUpdate));
+    console.log('updated doc' + JSON.stringify(updatedDoc));
+    dbOperations.update(docToUpdate, { $set : updatedDoc })
+      .then((response) => {
+        dbOperations.find(docToUpdate)
+          .then((results, err) => {
+              if (err) {
+                reject(err);
+              }
+              console.log("record " + JSON.stringify(results));
+              fulfill(results);
+          });
+      })
+  });
+};
 
 module.exports = dbOperations;

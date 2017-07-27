@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = {
   app: {
     computerCount: 20,
-    refreshDatastore: false
+    refreshDatastore: true
   },
   db : {
     computers: path.join(__dirname, '/src/db/computers.db')

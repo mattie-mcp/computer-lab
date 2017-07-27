@@ -1,6 +1,7 @@
 const dbOperations = require('../src/dbOperations.js');
 
 exports.addRoutes = (app, config) => {
+  
   app.get('/computers/', (req, res) => {
     var jsonParam = JSON.parse(req.query.filter);
     dbOperations.find(jsonParam)
@@ -8,11 +9,17 @@ exports.addRoutes = (app, config) => {
         res.send(accept);
       });
   });
+
   app.post('/computers/', (req, res) => {
-    var jsonUpdate = JSON.parse(req.query.filter);
-    dbOperations.updateAndRetreive(jsonUpdate)
+    var docToUpdate =  { "_id" : JSON.parse(req.query.id) };
+    var jsonUpdate = { student: JSON.parse(req.query.student) };
+    dbOperations.updateAndRetreive(docToUpdate, jsonUpdate)
       .then((accept, reject) => {
+        if (reject) {
+          console.log(reject);
+          //TODO: send error
+        }
         res.send(accept);
       });
-  });
+   });
 };

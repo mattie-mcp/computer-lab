@@ -18,18 +18,9 @@ app.controller('appController', ['$scope', '$http', ($scope, $http) => {
 
     $scope.updateSignIn = (state) => {
       $scope.signingIn = state;
-
-        // return $http({
-        //   url: '/computers',
-        //   method: "GET",
-        //   params: { filter: filter }
-        // }).then((successResponse) => {
-        //   return successResponse;
-        // }, (failResonse) => {
-        //   console.log('ERROR' + successResponse.status);
-        //   return null;
-        // });
-
+      if (!state) {
+        $scope.student = {};
+      }
     };
 
     $scope.findComputers = (filter) => {
@@ -38,35 +29,25 @@ app.controller('appController', ['$scope', '$http', ($scope, $http) => {
           method: "GET",
           params: { filter: filter }
         }).then((successResponse) => {
+          $scope.labData = successResponse.data;
           return successResponse;
         }, (failResonse) => {
           console.log('ERROR' + successResponse.status);
           return null;
         });
     };
-    
-    $scope.findComputers({})
-      .then((success, reject) => {
-        console.log('accept' + JSON.stringify(success.data));
-        $scope.labData = success.data;
-      });
 
     $scope.signIn = (computerId, student) => {
       $http({
           url: '/computers',
           method: "POST",
-          params: { id: computerId, student: student }
+          params: { id: computerId, record: { student: student, status: 'Unavailable' } }
         }).then((successResponse) => {
           var updatedRecord = successResponse.data[0];
-          console.log(JSON.stringify(updatedRecord));
-          $scope.labData.find((computer) => { 
-            if (computer._id == updatedRecord._id) {
-              computer.student = updatedRecord.student;
-              computer.time = updatedRecord.time;
-              return true;
-            }
-          });
-          $scope.clear();
+          var index = $scope.labData.findIndex((computer) => { return computer._id == updatedRecord._id });
+          $scope.labData[index] = updatedRecord;
+          $scope.labData[index].signingIn = false;
+          $scope.updateSignIn(false);
           return;
         }, (failResonse) => {
           console.log('ERROR' + successResponse.status);
@@ -74,9 +55,23 @@ app.controller('appController', ['$scope', '$http', ($scope, $http) => {
         });
     };
 
-    $scope.clear = () => {
-      $scope.student = {};
-    };
+    $scope.signOut = (computerId) => {
+      $http({
+          url: '/computers',
+          method: "POST",
+          params: { id: computerId, record: { student: {} , status: 'Available' } }
+        }).then((successResponse) => {
+          var updatedRecord = successResponse.data[0];
+          var index = $scope.labData.findIndex((computer) => { return computer._id == updatedRecord._id });
+          $scope.labData[index] = updatedRecord;
+          return;
+        }, (failResonse) => {
+          console.log('ERROR' + successResponse.status);
+          return null;
+        });
+    }
+    
+    $scope.findComputers({});
 }]);
 
 app.controller('menuController', ['$scope', ($scope) => {

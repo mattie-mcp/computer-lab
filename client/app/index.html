@@ -35,9 +35,10 @@
               <div class="col-xs-2">{{computer._id}}</div>
               <div class="col-xs-2">{{computer.name}}</div>
               <div class="col-xs-3">{{computer.status}}</div>
-              <div class="col-xs-3">{{computer.student}}</div>
-              <div class="col-xs-2" ng-hide="computer.status != 'Available'">
-                <button class="btn btn-success" ng-disabled="signingIn" type="button" ng-click="computer.signingIn = true; updateSignIn(true)">Reserve</button>
+              <div class="col-xs-3">{{computer.student.firstName}} {{computer.student.lastName}}</div>
+              <div class="col-xs-2">
+                <button class="btn btn-success"  ng-hide="computer.status != 'Available'" ng-disabled="signingIn" type="button" ng-click="computer.signingIn = true; updateSignIn(true)">Reserve</button>
+                <button class="btn btn-warning"  ng-hide="computer.status != 'Unavailable'" type="button" ng-click="signOut(computer._id)">Sign Out</button>
               </div>
             </div>
             <form class="row" style="padding:3px;margin-left:0px;margin-right:0px" ng-hide=" !computer.signingIn || computer.signingIn == false" name="signInData">

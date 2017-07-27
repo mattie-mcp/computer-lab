@@ -1,7 +1,7 @@
 const dbOperations = require('../src/dbOperations.js');
 
 exports.addRoutes = (app, config) => {
-  
+
   app.get('/computers/', (req, res) => {
     var jsonParam = JSON.parse(req.query.filter);
     dbOperations.find(jsonParam)
@@ -12,7 +12,8 @@ exports.addRoutes = (app, config) => {
 
   app.post('/computers/', (req, res) => {
     var docToUpdate =  { "_id" : JSON.parse(req.query.id) };
-    var jsonUpdate = { student: JSON.parse(req.query.student) };
+    var jsonUpdate = JSON.parse(req.query.record);
+    console.log('to update ' + jsonUpdate);
     dbOperations.updateAndRetreive(docToUpdate, jsonUpdate)
       .then((accept, reject) => {
         if (reject) {

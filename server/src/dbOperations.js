@@ -55,7 +55,7 @@ var defaultDatabase = () => {
       _id: i,
       name: 'Computer ' + i,
       status: 'Available',
-      student: 'Student',
+      student: {},
       time: 0
     };
     dbOperations.insert(document);
@@ -103,7 +103,7 @@ dbOperations.updateAndRetreive = (docToUpdate, updatedDoc) => {
               console.log("record " + JSON.stringify(results));
               fulfill(results);
           });
-      })
+      });
   });
 };
 

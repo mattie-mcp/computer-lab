@@ -64,3 +64,5 @@
 {"_id":5,"name":"Computer 5","status":"Unavailable","student":{"firstName":"new","lastName":"name"},"time":0}
 {"_id":1,"name":"Computer 1","status":"Available","student":{},"time":0}
 {"_id":3,"name":"Computer 3","status":"Unavailable","student":{"firstName":"I'm","lastName":"here"},"time":0}
+{"_id":3,"name":"Computer 3","status":"Available","student":{},"time":0}
+{"_id":5,"name":"Computer 5","status":"Available","student":{},"time":0}

@@ -41,7 +41,7 @@
                 <button class="btn btn-warning"  ng-hide="computer.status != 'Unavailable'" type="button" ng-click="signOut(computer._id)">Sign Out</button>
               </div>
             </div>
-            <form class="row" style="padding:3px;margin-left:0px;margin-right:0px" ng-hide=" !computer.signingIn || computer.signingIn == false" name="signInData">
+            <form class="row" style="padding-left:3px;padding-right:3px;padding-bottom:15px;padding-top:5px;margin-left:0px;margin-right:0px" ng-hide=" !computer.signingIn || computer.signingIn == false" name="signInData">
               <div class="col-xs-4">
                 <label  for="firstName">First Name</label>
                 <input type="text" class="form-control" id="firstNameInput" placeholder="First Name" ng-model="student.firstName">
@@ -50,10 +50,10 @@
                 <label for="lastName">Last Name</label>
                 <input type="text" class="form-control" id="lastNameInput" placeholder="Last Name" ng-model="student.lastName">
               </div>
-              <div class="col-xs-2 text-center" style="vertical-align:middle">
+              <div class="col-xs-2" style="vertical-align:middle">
                 <button type="submit" class="btn btn-primary btn-md" ng-click="signIn(computer._id, student)">Sign into Computer</button>
               </div>
-              <div class="col-xs-2 text-center" style="vertical-align:middle">
+              <div class="col-xs-2" style="vertical-align:middle">
                 <button type="button" class="btn btn-default btn-md" ng-click="computer.signingIn = false; updateSignIn(false)">Cancel</button>
               </div>
             </form>

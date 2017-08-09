@@ -67,7 +67,7 @@ module.exports = (grunt) => {
     copy : {
       main : {
         files: [
-          { expand: true, flatten: true, src: ['app/__header.html'], dest: 'dist/' },
+          { expand: true, flatten: true, src: ['app/__header.html', 'app/stylesheets/stylesheets.less'], dest: 'dist/' },
         ]
       }
     },

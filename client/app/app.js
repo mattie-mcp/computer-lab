@@ -12,6 +12,40 @@ app.config(['$routeProvider', '$locationProvider', ($routeProvider, $locationPro
       });
 }]);
 
+// app.service('stopwatch', () => {
+  
+//   let startTime;
+//   let endTime;
+//   let elapsedMs = 0;
+//   let tick;
+
+//   this.start = () => {
+//     this.startTime = new Date();
+//     this.tick = $interval(() => {
+//       this.elapsedMs = this.startTime.getTime() - new Date().getTime();
+//     }, 1000);
+//   };
+
+//   this.stop = () => {
+//     this.endTime = new Date();
+//     if (this.tick) {
+//       this.tick.then(() => {
+//         this.tick = null;
+//         this.endTime = new Date();
+//       });
+//     }
+//     this.tick = null;
+//   };
+
+//   this.reset = () => {
+//     this.startTime = null;
+//     this.endTime = null;
+//     this.elapsedMs = 0;
+//     this.tick = null;
+//   };
+  
+// });
+
 app.controller('appController', ['$scope', '$http', ($scope, $http) => {
     $scope.student = {};
     $scope.signingIn = false;
@@ -41,7 +75,7 @@ app.controller('appController', ['$scope', '$http', ($scope, $http) => {
       $http({
           url: '/computers',
           method: "POST",
-          params: { id: computerId, record: { student: student, status: 'Unavailable' } }
+          params: { id: computerId, record: { student: student, status: 'Unavailable', signInTime: new Date() } }
         }).then((successResponse) => {
           var updatedRecord = successResponse.data[0];
           var index = $scope.labData.findIndex((computer) => { return computer._id == updatedRecord._id });
@@ -59,7 +93,7 @@ app.controller('appController', ['$scope', '$http', ($scope, $http) => {
       $http({
           url: '/computers',
           method: "POST",
-          params: { id: computerId, record: { student: {} , status: 'Available' } }
+          params: { id: computerId, record: { student: {} , status: 'Available', signInTime: {} } }
         }).then((successResponse) => {
           var updatedRecord = successResponse.data[0];
           var index = $scope.labData.findIndex((computer) => { return computer._id == updatedRecord._id });
@@ -69,6 +103,15 @@ app.controller('appController', ['$scope', '$http', ($scope, $http) => {
           console.log('ERROR' + successResponse.status);
           return null;
         });
+    }
+
+    $scope.getTime = (dateString) => {
+      if (jQuery.isEmptyObject(dateString)) {
+        return "";
+      }
+      var dateTime = new Date(dateString);
+      var hours = dateTime.getHours() > 12 ? dateTime.getHours()-12 : dateTime.getHours();
+      return hours + ":" + dateTime.getMinutes();
     }
     
     $scope.findComputers({});

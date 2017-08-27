@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
   app: {
-    computerCount: 20,
+    computerCount: 24,
     refreshDatastore: true
   },
   db : {

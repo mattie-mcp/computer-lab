@@ -1,5 +1,5 @@
-{"_id":1,"name":"Computer 1","status":"Available","student":{},"time":0}
-{"_id":2,"name":"Computer 2","status":"Available","student":{},"time":0}
+{"_id":1,"name":"Computer 1","status":"Available","student":{},"time":0,"signInTime":{}}
+{"_id":2,"name":"Computer 2","status":"Available","student":{},"time":0,"signInTime":{}}
 {"_id":3,"name":"Computer 3","status":"Available","student":{},"time":0}
 {"_id":4,"name":"Computer 4","status":"Available","student":{},"time":0}
 {"_id":5,"name":"Computer 5","status":"Available","student":{},"time":0}
@@ -58,3 +58,7 @@
 {"_id":18,"name":"Computer 18","status":"Available","student":{},"time":0}
 {"_id":19,"name":"Computer 19","status":"Available","student":{},"time":0}
 {"_id":20,"name":"Computer 20","status":"Available","student":{},"time":0}
+{"_id":21,"name":"Computer 21","status":"Available","student":{},"time":0}
+{"_id":22,"name":"Computer 22","status":"Available","student":{},"time":0}
+{"_id":23,"name":"Computer 23","status":"Available","student":{},"time":0}
+{"_id":24,"name":"Computer 24","status":"Available","student":{},"time":0}
